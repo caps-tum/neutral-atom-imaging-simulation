@@ -1,0 +1,2 @@
+void createImageEMCCD(double *binnedImage, const double potentialAtomLocations[][2], unsigned short cameraCoords, double *truth, int atomCount, int approximationSteps);
+void createImageCMOS(double *binnedImage, const double potentialAtomLocations[][2], unsigned short cameraCoords, double *truth, int atomCount, int approximationSteps);

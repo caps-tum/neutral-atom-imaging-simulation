@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+[project]
+name = "neutral_atom_imaging_simulation"
+version = "0.0.1"
+authors = [
+  { name="Jonas Winklmann", email="jonas.winklmann@tum.de" },
+]
+description = "Package for generating simulated images of neutral atoms"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+        'Development Status :: 3 - Alpha',
+        'Intended Audience :: Science/Research',
+        'License :: OSI Approved :: MIT License',  
+        'Operating System :: POSIX :: Linux',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+]
+dependencies = ["matplotlib","numpy"]
+
+[project.urls]
+"Homepage" = "https://gitlab.lrz.de/jonas.winklmann/neutral-atom-imaging-simulation"
+"Bug Tracker" = "https://gitlab.lrz.de/jonas.winklmann/neutral-atom-imaging-simulation/issues"
