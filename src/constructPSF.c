@@ -48,7 +48,7 @@ EXPORT void getPSF(double *psf, int numPixels)
         for(int j = 0; j < numPixels; j++)
         {
             double abs = cabs(psfC[i * numPixels + j]);
-            psf[((i + (numPixels + 1) / 2) % numPixels) * numPixels + ((j + (numPixels + 1) / 2) % numPixels)] = abs * abs;
+            psf[((i + numPixels/ 2) % numPixels) * numPixels + ((j + numPixels / 2) % numPixels)] = abs * abs;
             sum += abs * abs;
         }
     }

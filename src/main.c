@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "atomDetection.h"
 #include "createSampleImage.h"
 #include "distributionSampling.h"
 #include "settings.h"
