@@ -17,6 +17,7 @@ $(BIN_DIR)/createSampleImage.dll: $(OBJECTS) | $(BIN_DIR)
 	$(CC) $(DLLFLAGS) -o $@ $^ $(CFLAGS)
 	mkdir -p pip_project/neutral_atom_imaging_simulation/lib/
 	cp -f $@ pip_project/neutral_atom_imaging_simulation/lib/
+	cp -f fftw-3.3.5-dll64/libfftw3-3.dll pip_project/neutral_atom_imaging_simulation/lib/
 $(OBJ_DIR)/%.obj: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	$(CC) -c $< -o $@ $(CFLAGS)
 $(BIN_DIR) $(OBJ_DIR):
