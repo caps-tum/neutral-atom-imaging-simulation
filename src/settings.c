@@ -1,5 +1,4 @@
 #include "settings.h"
-#include "platformDefines.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -204,140 +203,140 @@ EXPORT void readConfig(const char *path)
     fclose(file);
 }
 
-EXPORT void setStrayLightRate(double val)
+void setStrayLightRate(double val)
 {
     simulationSettings.strayLightRate = val;
 }
 
-EXPORT void setDarkCurrentRate(double val)
+void setDarkCurrentRate(double val)
 {
     simulationSettings.darkCurrentRate = val;
 }
 
-EXPORT void setDarkCurrentSamplingAlpha(double val)
+void setDarkCurrentSamplingAlpha(double val)
 {
     simulationSettings.darkCurrentSamplingAlpha = val;
 }
 
-EXPORT void setDarkCurrentSamplingBeta(double val)
+void setDarkCurrentSamplingBeta(double val)
 {
     simulationSettings.darkCurrentSamplingBeta = val;
 }
 
-EXPORT void setCicChance(double val)
+void setCicChance(double val)
 {
     simulationSettings.cicChance = val;
 }
 
-EXPORT void setQuantumEfficiency(double val)
+void setQuantumEfficiency(double val)
 {
     simulationSettings.quantumEfficiency = val;
 }
 
-EXPORT void setWavelength(double val)
+void setWavelength(double val)
 {
     simulationSettings.wavelength = val;
 }
 
-EXPORT void setNumericalAperture(double val)
+void setNumericalAperture(double val)
 {
     simulationSettings.numericalAperture = val;
 }
 
-EXPORT void setPhysicalPixelSize(double val)
+void setPhysicalPixelSize(double val)
 {
     simulationSettings.physicalPixelSize = val;
     simulationSettings.pixelSize = val / simulationSettings.magnification;
 }
 
-EXPORT void setMagnification(double val)
+void setMagnification(double val)
 {
     simulationSettings.magnification = val;
     simulationSettings.pixelSize = simulationSettings.physicalPixelSize / val;
 }
 
-EXPORT void setBiasClamp(double val)
+void setBiasClamp(double val)
 {
     simulationSettings.biasClamp = val;
 }
 
-EXPORT void setBiasStdev(double val)
+void setBiasStdev(double val)
 {
     simulationSettings.biasStdev = val;
 }
 
-EXPORT void setRowNoiseStdev(double val)
+void setRowNoiseStdev(double val)
 {
     simulationSettings.rowNoiseStdev = val;
 }
 
-EXPORT void setColumnNoiseScale(double val)
+void setColumnNoiseScale(double val)
 {
     simulationSettings.columnNoiseScale = val;
 }
 
-EXPORT void setFlickerNoiseScale(double val)
+void setFlickerNoiseScale(double val)
 {
     simulationSettings.flickerNoiseScale = val;
 }
 
-EXPORT void setPreampgain(double val)
+void setPreampgain(double val)
 {
     simulationSettings.preampgain = val;
 }
 
-EXPORT void setSCICChance(double val)
+void setSCICChance(double val)
 {
     simulationSettings.sCICChance = val;
 }
 
-EXPORT void setReadoutStdev(double val)
+void setReadoutStdev(double val)
 {
     simulationSettings.readoutStdev = val;
 }
 
-EXPORT void setNumberGainRegisters(double val)
+void setNumberGainRegisters(double val)
 {
     simulationSettings.numberGainRegisters = val;
 }
 
-EXPORT void setP0(double val)
+void setP0(double val)
 {
     simulationSettings.p0 = val;
 }
 
-EXPORT void setScatteringRate(double val)
+void setScatteringRate(double val)
 {
     simulationSettings.scatteringRate = val;
 }
 
-EXPORT void setExposureTime(double val)
+void setExposureTime(double val)
 {
     simulationSettings.exposureTime = val;
 }
 
-EXPORT void setSurvivalProbability(double val)
+void setSurvivalProbability(double val)
 {
     simulationSettings.survivalProbability = val;
 }
 
-EXPORT void setFillingRatio(double val)
+void setFillingRatio(double val)
 {
     simulationSettings.fillingRatio = val;
 }
 
-EXPORT void setBinning(int val)
+void setBinning(int val)
 {
     simulationSettings.binning = val;
 }
 
-EXPORT void setResolution(int x, int y)
+void setResolution(int x, int y)
 {
     simulationSettings.resolutionX = x;
     simulationSettings.resolutionY = y;
 }
 
-EXPORT void setZernikeCoefficients(const double val[15])
+void setZernikeCoefficients(const double val[15])
 {
     memcpy(simulationSettings.zernikeCoefficients, val, 15 * sizeof(double));
 }

@@ -4,8 +4,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "platformDefines.h"
-
 double randomZeroToOne()
 {
     static _Bool wasExecuted = 0;
@@ -18,13 +16,13 @@ double randomZeroToOne()
     return rand() / (double)RAND_MAX;
 }
 
-EXPORT double sampleGaussian(double mean, double stdev)
+double sampleGaussian(double mean, double stdev)
 {
     double boxMullerMethod = sqrt(-2 * log(randomZeroToOne())) * cos(2 * M_PI * randomZeroToOne());
     return boxMullerMethod * stdev + mean;
 }
 
-EXPORT int samplePoisson(double lambda)
+int samplePoisson(double lambda)
 {
     double l = pow(M_E, -lambda);
     int k = 0;
@@ -63,7 +61,7 @@ double marsagliaGamma(double shape)
     }
 }
 
-EXPORT double sampleGamma(double shape, double rate)
+double sampleGamma(double shape, double rate)
 {
     double val;
     if(shape < 1)
@@ -77,7 +75,7 @@ EXPORT double sampleGamma(double shape, double rate)
     return val / rate;
 }
 
-EXPORT double sampleGumbel(double location, double scale)
+double sampleGumbel(double location, double scale)
 {
     return location - scale * log(-log(randomZeroToOne()));
 }
@@ -101,7 +99,7 @@ EXPORT double sampleGumbel(double location, double scale)
  * https://doi.org/10.1145/22721.23109
  * https://doi.org/10.1016/S0960-0779(00)00259-9
  */
-EXPORT int sampleEMGain(int primary, double emGain)
+int sampleEMGain(int primary, double emGain)
 {
     if(primary == 0)
     {
@@ -146,7 +144,7 @@ EXPORT int sampleEMGain(int primary, double emGain)
     }
 }
 
-EXPORT double sampleTimeOfAtomLossImaging(double survivalProbability)
+double sampleTimeOfAtomLossImaging(double survivalProbability)
 {
     return log((survivalProbability - 1) * randomZeroToOne() + 1) / log(survivalProbability);
 }

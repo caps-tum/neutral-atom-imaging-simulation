@@ -1,13 +1,13 @@
 #include <complex.h>
 #include <fftw3.h>
+#define _USE_MATH_DEFINES
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
 #include "settings.h"
 #include "imageModulation.h"
-#include "platformDefines.h"
 
-EXPORT void getPSF(double *psf, int numPixels)
+void getPSF(double *psf, int numPixels)
 {
     double pupilRadius = numPixels * simulationSettings.physicalPixelSize / simulationSettings.magnification * simulationSettings.numericalAperture / simulationSettings.wavelength;   // Pupil radius in pixels
 

@@ -1,3 +1,5 @@
+#include "platformDefines.h"
+
 typedef struct Settings
 {
     double strayLightRate;      // registered photons per second
@@ -31,33 +33,33 @@ typedef struct Settings
     double zernikeCoefficients[15];
 } settings;
 
-void readConfig(const char *path);
-void setStrayLightRate(double val);
-void setDarkCurrentRate(double val);
-void setDarkCurrentSamplingAlpha(double val);
-void setDarkCurrentSamplingBeta(double val);
-void setCicChance(double val);
-void setQuantumEfficiency(double val);
-void setWavelength(double val);
-void setNumericalAperture(double val);
-void setPhysicalPixelSize(double val);
-void setMagnification(double val);
-void setBiasClamp(double val);
-void setBiasStdev(double val);
-void setRowNoiseStdev(double val);
-void setColumnNoiseScale(double val);
-void setFlickerNoiseScale(double val);
-void setPreampgain(double val);
-void setSCICChance(double val);
-void setReadoutStdev(double val);
-void setNumberGainRegisters(double val);
-void setP0(double val);
-void setScatteringRate(double val);
-void setExposureTime(double val);
-void setSurvivalProbability(double val);
-void setFillingRatio(double val);
-void setBinning(int val);
-void setResolution(int x, int y);
-void setZernikeCoefficients(const double val[15]);
+EXPORT void readConfig(const char *path);
+EXPORT void setStrayLightRate(double val);
+EXPORT void setDarkCurrentRate(double val);
+EXPORT void setDarkCurrentSamplingAlpha(double val);
+EXPORT void setDarkCurrentSamplingBeta(double val);
+EXPORT void setCicChance(double val);
+EXPORT void setQuantumEfficiency(double val);
+EXPORT void setWavelength(double val);
+EXPORT void setNumericalAperture(double val);
+EXPORT void setPhysicalPixelSize(double val);
+EXPORT void setMagnification(double val);
+EXPORT void setBiasClamp(double val);
+EXPORT void setBiasStdev(double val);
+EXPORT void setRowNoiseStdev(double val);
+EXPORT void setColumnNoiseScale(double val);
+EXPORT void setFlickerNoiseScale(double val);
+EXPORT void setPreampgain(double val);
+EXPORT void setSCICChance(double val);
+EXPORT void setReadoutStdev(double val);
+EXPORT void setNumberGainRegisters(double val);
+EXPORT void setP0(double val);
+EXPORT void setScatteringRate(double val);
+EXPORT void setExposureTime(double val);
+EXPORT void setSurvivalProbability(double val);
+EXPORT void setFillingRatio(double val);
+EXPORT void setBinning(int val);
+EXPORT void setResolution(int x, int y);
+EXPORT void setZernikeCoefficients(const double val[15]);
 
 extern settings simulationSettings;

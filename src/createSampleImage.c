@@ -5,7 +5,6 @@
 #include "settings.h"
 #include "distributionSampling.h"
 #include "imageModulation.h"
-#include "platformDefines.h"
 
 #define EulerMascheroni 0.5772156649015328606065120900824024310422
 
@@ -120,7 +119,7 @@ void normalizeCameraCoords(double normalizedAtomLocations[][2], double atomLocat
     }
 }
 
-EXPORT void createImageEMCCD(double *binnedImage, const double potentialAtomLocations[][2], unsigned short cameraCoords, double *truth, unsigned int potentialAtomCount, unsigned int approximationSteps)
+void createImageEMCCD(double *binnedImage, const double potentialAtomLocations[][2], unsigned short cameraCoords, double *truth, unsigned int potentialAtomCount, unsigned int approximationSteps)
 {
     double gamma = pow(1 + simulationSettings.p0, simulationSettings.numberGainRegisters);
 
@@ -187,7 +186,7 @@ EXPORT void createImageEMCCD(double *binnedImage, const double potentialAtomLoca
     free(normalizedAtomLocations);
 }
 
-EXPORT void createImageCMOS(double *binnedImage, const double potentialAtomLocations[][2], unsigned short cameraCoords, double *truth, unsigned int potentialAtomCount, unsigned int approximationSteps)
+void createImageCMOS(double *binnedImage, const double potentialAtomLocations[][2], unsigned short cameraCoords, double *truth, unsigned int potentialAtomCount, unsigned int approximationSteps)
 {
     int imageHeight = approximationSteps * simulationSettings.resolutionY;
     int imageWidth = approximationSteps * simulationSettings.resolutionX;
