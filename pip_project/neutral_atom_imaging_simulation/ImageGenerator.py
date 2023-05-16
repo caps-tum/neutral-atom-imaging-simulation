@@ -7,6 +7,7 @@ from .Experiment import Experiment, TweezerArray
 import numpy as np
 import matplotlib.pyplot as plt
 from os import path
+import platform
 
 class ImageGenerator:
     """Main class for generating images"""
@@ -16,7 +17,10 @@ class ImageGenerator:
     def __init__(self):
         """Constructor
         Loads C library for later use"""
-        self.__create_image_library = ctypes.cdll.LoadLibrary(path.dirname(__file__) + '/lib/libcreateSampleImage.so')
+        if platform.system() == 'Windows':
+            self.__create_image_library = ctypes.windll.LoadLibrary(path.dirname(__file__) + '/lib/createSampleImage')
+        else:
+            self.__create_image_library = ctypes.cdll.LoadLibrary(path.dirname(__file__) + '/lib/libcreateSampleImage.so')
         self.__create_image_library.readConfig.argtypes = [ctypes.c_char_p]
         self.__create_image_library.initSettings()
 
@@ -41,13 +45,13 @@ class ImageGenerator:
         self.__experiment.set_library(self.__create_image_library)
         self.__experiment.apply_settings()
 
-    def create_image(self):
+    def create_image(self, approximation_steps = 1):
         """Function to be called for generating an image
+        @param approximation_steps The number of subdivisions for each pixel for the optical simulation
         @return Numpy array of generated image
         @return Numpy array of ground truths per atom site"""
         resolution = (self.__camera.resolution[0] // self.__camera.binning, self.__camera.resolution[1] // self.__camera.binning)
         image = np.zeros((resolution[0] * resolution[1],))
-        approximation_steps = 1
         atom_locations = self.__experiment.get_atom_sites()
         atom_count = len(atom_locations)
         c_atom_list = (ctypes.c_double * 2 * atom_count)()
