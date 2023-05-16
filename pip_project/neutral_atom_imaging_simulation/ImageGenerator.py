@@ -22,7 +22,6 @@ class ImageGenerator:
         else:
             self.__create_image_library = ctypes.cdll.LoadLibrary(path.dirname(__file__) + '/lib/libcreateSampleImage.so')
         self.__create_image_library.readConfig.argtypes = [ctypes.c_char_p]
-        self.__create_image_library.initSettings()
 
     def get_library(self):
         """Returns the loaded C library

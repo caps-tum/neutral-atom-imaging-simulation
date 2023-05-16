@@ -4,38 +4,36 @@
 #include <stdio.h>
 #include <string.h>
 
-settings simulationSettings;
-__attribute__((constructor)) EXPORT void initSettings()
-{
-    simulationSettings.strayLightRate = 0.4;
-    simulationSettings.darkCurrentRate = 0.00029;
-    simulationSettings.darkCurrentSamplingAlpha = 0.006;
-    simulationSettings.darkCurrentSamplingBeta = 1;
-    simulationSettings.cicChance = 0.00037;
-    simulationSettings.quantumEfficiency = 0.86;
-    simulationSettings.wavelength = 0.4619;
-    simulationSettings.numericalAperture = 0.65;
-    simulationSettings.physicalPixelSize = 16;
-    simulationSettings.magnification = 156.25;
-    simulationSettings.pixelSize = 0.1024;
-    simulationSettings.biasClamp = 500;
-    simulationSettings.biasStdev = 1;
-    simulationSettings.rowNoiseStdev = 0.5;
-    simulationSettings.columnNoiseScale = 0.5;
-    simulationSettings.flickerNoiseScale = 0.2;
-    simulationSettings.preampgain = 4.11;
-    simulationSettings.sCICChance = 0.00002;
-    simulationSettings.readoutStdev = 4;
-    simulationSettings.numberGainRegisters = 536;
-    simulationSettings.p0 = 0.0106982061; // em gain 300
-    simulationSettings.scatteringRate = 30000;
-    simulationSettings.exposureTime = 0.1;
-    simulationSettings.survivalProbability = 1;
-    simulationSettings.fillingRatio = 1;
-    simulationSettings.binning = 1;
-    simulationSettings.resolutionX = 512;
-    simulationSettings.resolutionY = 512;
-}
+settings simulationSettings = {
+    .strayLightRate = 0.4,
+    .darkCurrentRate = 0.00029,
+    .darkCurrentSamplingAlpha = 0.006,
+    .darkCurrentSamplingBeta = 1,
+    .cicChance = 0.00037,
+    .quantumEfficiency = 0.86,
+    .wavelength = 0.4619,
+    .numericalAperture = 0.65,
+    .physicalPixelSize = 16,
+    .magnification = 156.25,
+    .pixelSize = 0.1024,
+    .biasClamp = 500,
+    .biasStdev = 1,
+    .rowNoiseStdev = 0.5,
+    .columnNoiseScale = 0.5,
+    .flickerNoiseScale = 0.2,
+    .preampgain = 4.11,
+    .sCICChance = 0.00002,
+    .readoutStdev = 4,
+    .numberGainRegisters = 536,
+    .p0 = 0.0106982061, // em gain 300
+    .scatteringRate = 30000,
+    .exposureTime = 0.1,
+    .survivalProbability = 1,
+    .fillingRatio = 1,
+    .binning = 1,
+    .resolutionX = 512,
+    .resolutionY = 512,
+};
 
 EXPORT void readConfig(const char *path)
 {

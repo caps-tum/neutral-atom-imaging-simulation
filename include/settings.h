@@ -32,7 +32,6 @@ typedef struct Settings
 } settings;
 
 void readConfig(const char *path);
-void initSettings();
 void setStrayLightRate(double val);
 void setDarkCurrentRate(double val);
 void setDarkCurrentSamplingAlpha(double val);

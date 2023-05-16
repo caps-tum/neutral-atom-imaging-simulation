@@ -22,11 +22,9 @@ int main()
 {
     FILE *output = fopen("modulated", "w");
 
-    initSettings();
-
     double *binnedImage = malloc(resolutionX * resolutionY * sizeof(double));
 
-    readConfig("../simulationSettings.cfg");
+    readConfig("simulationSettings.cfg");
     setZernikeCoefficients(zernikeCoefficients);
     setResolution(resolutionX * simulationSettings.binning, resolutionY * simulationSettings.binning);
     setScatteringRate(29000);
