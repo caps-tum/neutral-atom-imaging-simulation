@@ -1,0 +1,23 @@
+CC=x86_64-w64-mingw32-gcc
+CFLAGS=-Wl,-Bstatic -L. fftw-3.3.5-dll64/libfftw3-3.dll -lm -fPIC -O3 -Iinclude -Ifftw-3.3.5-dll64 -fstack-protector
+DLLFLAGS=-shared
+
+SRC_DIR	:= src
+OBJ_DIR	:= obj
+BIN_DIR	:= bin
+
+SOURCES := $(filter-out src/main.c,$(wildcard $(SRC_DIR)/*.c))
+OBJECTS	:= $(SOURCES:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.obj)
+
+all: dll
+dll: $(BIN_DIR)/createSampleImage.dll
+clean:
+	-rm $(OBJECTS) $(BIN_DIR)/createSampleImage.dll
+$(BIN_DIR)/createSampleImage.dll: $(OBJECTS) | $(BIN_DIR)
+	$(CC) $(DLLFLAGS) -o $@ $^ $(CFLAGS)
+	mkdir -p pip_project/neutral_atom_imaging_simulation/lib/
+	cp -f $@ pip_project/neutral_atom_imaging_simulation/lib/
+$(OBJ_DIR)/%.obj: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	$(CC) -c $< -o $@ $(CFLAGS)
+$(BIN_DIR) $(OBJ_DIR):
+	mkdir -p $@

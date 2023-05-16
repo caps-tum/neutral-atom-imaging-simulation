@@ -8,17 +8,12 @@ BIN_DIR	:= bin
 SOURCES := $(filter-out src/main.c,$(wildcard $(SRC_DIR)/*.c))
 OBJECTS	:= $(SOURCES:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
-all: main dll so
+all: main so
 fresh:
 	-rm $(OBJECTS)
 	make all
 main: $(BIN_DIR)/main.o
-dll: $(BIN_DIR)/createSampleImage.dll
 so: $(BIN_DIR)/libcreateSampleImage.so
-$(BIN_DIR)/createSampleImage.dll: $(OBJECTS) | $(BIN_DIR)
-	$(CC) $(DLLFLAGS) -o $@ $^ $(CFLAGS)
-	mkdir -p pip_project/neutral_atom_imaging_simulation/lib/
-	cp -f $@ pip_project/neutral_atom_imaging_simulation/lib/
 $(BIN_DIR)/libcreateSampleImage.so: $(OBJECTS) | $(BIN_DIR)
 	$(CC) $(DLLFLAGS) -o $@ $^ $(CFLAGS)
 	mkdir -p pip_project/neutral_atom_imaging_simulation/lib/
