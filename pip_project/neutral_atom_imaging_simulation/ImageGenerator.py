@@ -18,7 +18,7 @@ class ImageGenerator:
         """Constructor
         Loads C library for later use"""
         if platform.system() == 'Windows':
-            self.__create_image_library = ctypes.windll.LoadLibrary(path.dirname(__file__) + '/lib/createSampleImage')
+            self.__create_image_library = ctypes.windll.LoadLibrary(path.dirname(__file__) + '/lib/createSampleImage.dll')
         else:
             self.__create_image_library = ctypes.cdll.LoadLibrary(path.dirname(__file__) + '/lib/libcreateSampleImage.so')
         self.__create_image_library.readConfig.argtypes = [ctypes.c_char_p]
