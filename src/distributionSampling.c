@@ -41,8 +41,10 @@ double marsagliaGamma(double shape)
     double x,v,u;
     double d = shape - 1./3.; 
     double c = 1./sqrt(9. * d);
+    int loggedIter = 5;
     while(1)
     {
+    	v = 0;
         while(v <= 0) 
         {
             x = sampleGaussian(0,1);
@@ -50,11 +52,12 @@ double marsagliaGamma(double shape)
         }
         v = v*v*v; 
         u = randomZeroToOne();
-        if(u < 1. - 0.0331 * (x*x) * (x*x)) 
+        double xSq = x * x;
+        if(u < 1. - 0.0331 * xSq * xSq) 
         {
             return (d*v);
         }
-        if(log(u) < 0.5 * x*x + d * (1. - v + log(v)))
+        if(log(u) < 0.5 * xSq + d * (1. - v + log(v)))
         {
             return (d*v); 
         }

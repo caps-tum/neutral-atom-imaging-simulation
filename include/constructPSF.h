@@ -1,3 +1,4 @@
 #include "platformDefines.h"
 
-EXPORT void getPSF(double *psf, int numPixels, double physicalPixelSize, const double zernikeCoefficients[15]);
+EXPORT void getPSF(double *psf, int numPixels);
+EXPORT void getConvolutedLightSource(double *psf, int numPixels);

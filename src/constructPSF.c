@@ -7,6 +7,31 @@
 #include "settings.h"
 #include "imageModulation.h"
 
+void getConvolutedLightSource(double *psf, int numPixels)
+{
+    memset(psf, 0, numPixels * numPixels * sizeof(double));
+
+    double middle = (double)(numPixels - 1) / 2.;
+    double gaussianNormalizationFactor = 1;
+    if(simulationSettings.lightSourceStdev > 0)
+    {
+        gaussianNormalizationFactor = 1 / (2 * M_PI * simulationSettings.lightSourceStdev * simulationSettings.lightSourceStdev);
+        for(int i = 0; i < numPixels; i++)
+        {
+            for(int j = 0; j < numPixels; j++)
+            {
+                psf[i * numPixels + j] = gaussianNormalizationFactor * pow(M_E, -((i - middle) * (i - middle) + (j - middle) * (j - middle)) / 
+                    (2 * simulationSettings.lightSourceStdev * simulationSettings.lightSourceStdev));
+            }
+        }
+    }
+    else
+    {
+        psf[((int)middle) * numPixels + (int)middle] = 1;
+    }
+    simulateOptics(psf, numPixels, numPixels, simulationSettings.pixelSize, 1);
+}
+
 void getPSF(double *psf, int numPixels)
 {
     double pupilRadius = numPixels * simulationSettings.physicalPixelSize / simulationSettings.magnification * simulationSettings.numericalAperture / simulationSettings.wavelength;   // Pupil radius in pixels
@@ -23,8 +48,8 @@ void getPSF(double *psf, int numPixels)
     {
         for(int j = 0; j < numPixels; j++)
         {
-            double y = i - (numPixels + 1) / 2;
-            double x = j - (numPixels + 1) / 2;
+            double y = i - (numPixels - 1) / 2;
+            double x = j - (numPixels - 1) / 2;
             double r = sqrt(x * x + y * y);
             if(r < pupilRadius)
             {
@@ -48,7 +73,7 @@ void getPSF(double *psf, int numPixels)
         for(int j = 0; j < numPixels; j++)
         {
             double abs = cabs(psfC[i * numPixels + j]);
-            psf[((i + numPixels/ 2) % numPixels) * numPixels + ((j + numPixels / 2) % numPixels)] = abs * abs;
+            psf[((i + numPixels / 2) % numPixels) * numPixels + ((j + numPixels / 2) % numPixels)] = abs * abs;
             sum += abs * abs;
         }
     }

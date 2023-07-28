@@ -33,7 +33,7 @@ class Experiment(ABC):
 class TweezerArray(Experiment):
     """Use this if a tweezer array is to be simulated"""
 
-    def __init__(self, stray_light_rate = None, imaging_wavelength = None, scattering_rate = None, survival_probability = None, fill_rate = None):
+    def __init__(self, stray_light_rate = None, imaging_wavelength = None, scattering_rate = None, survival_probability = None, fill_rate = None, light_source_stdev = None):
         """Constructor
         @param stray_light_rate Rate of stray light (photons/s)
         @param imaging_wavelength The imaging wavelength (um)
@@ -46,6 +46,7 @@ class TweezerArray(Experiment):
         self.scattering_rate = scattering_rate
         self.survival_probability = survival_probability
         self.fill_rate = fill_rate
+        self.light_source_stdev = light_source_stdev
         self.atom_sites = []
         self.__uses_camera_coords = True
     
@@ -62,6 +63,8 @@ class TweezerArray(Experiment):
             self.library.setSurvivalProbability(ctypes.c_double(self.survival_probability))
         if self.fill_rate:
             self.library.setFillingRatio(ctypes.c_double(self.fill_rate))
+        if self.light_source_stdev:
+            self.library.setLightSourceStdev(ctypes.c_double(self.light_source_stdev))
 
     def set_atom_sites_camera_space(self, atom_sites):
         """Function for setting the list of atom sites in normalized camera coordinates.
@@ -70,17 +73,17 @@ class TweezerArray(Experiment):
         self.__uses_camera_coords = True
         self.atom_sites = atom_sites
 
-    def configure_atom_sites_camera_space(self, spacing: tuple, count: tuple, offset: tuple, angle : float):
+    def configure_atom_sites_camera_space(self, spacing: tuple, count: tuple, offset: tuple, angle : tuple):
         """Function for configuring the layout of atom sites in normalized camera coordinates. On average, there will be column_count * row_count * fill_rate atoms.
         @param spacing The distance between two columns of atoms in normalized camera coordinates (x,y)
         @param count The number of columns (x,y)
         @param offset Distance from the image edge to the first atom site in normalized camera coordinates (x,y)
-        @param angle The whole grid is rotated around the first atom site by this angle. Specify in radians
+        @param angle The angle between the x-/y-axis and the corresponding atom row/column spacing vector (x,y). Specify in radians
         @return None"""
         self.__uses_camera_coords = True
         self.atom_sites = []
-        rotated_column_spacing = np.array((spacing[0] * math.cos(angle), spacing[0] * math.sin(angle)))
-        rotated_row_spacing = np.array((-spacing[1] * math.sin(angle), spacing[1] * math.cos(angle)))
+        rotated_column_spacing = np.array((spacing[0] * math.cos(angle[0]), spacing[0] * math.sin(angle[0])))
+        rotated_row_spacing = np.array((-spacing[1] * math.sin(angle[1]), spacing[1] * math.cos(angle[1])))
         base = np.array(offset)
         for row in range(count[1]):
             for col in range(count[0]):
@@ -93,17 +96,17 @@ class TweezerArray(Experiment):
         self.__uses_camera_coords = False
         self.atom_sites = atom_sites
 
-    def configure_atom_sites_physical_space(self, spacing: tuple, count: tuple, offset: tuple, angle : float):
+    def configure_atom_sites_physical_space(self, spacing: tuple, count: tuple, offset: tuple, angle : tuple):
         """Function for configuring the layout of atom sites in physical object space. On average, there will be column_count * row_count * fill_rate atoms.
         @param spacing The distance between two columns of atoms in &#956m (x,y)
         @param count The number of columns (x,y)
         @param offset Distance from the image edge to the first atom site in &#956m (x,y)
-        @param angle The whole grid is rotated around the first atom site by this angle. Specify in radians
+        @param angle The angle between the x-/y-axis and the corresponding atom row/column spacing vector (x,y). Specify in radians
         @return None"""
         self.__uses_camera_coords = False
         self.atom_sites = []
-        rotated_column_spacing = np.array((spacing[0] * math.cos(angle), spacing[0] * math.sin(angle)))
-        rotated_row_spacing = np.array((-spacing[1] * math.sin(angle), spacing[1] * math.cos(angle)))
+        rotated_column_spacing = np.array((spacing[0] * math.cos(angle[0]), spacing[0] * math.sin(angle[0])))
+        rotated_row_spacing = np.array((-spacing[1] * math.sin(angle[1]), spacing[1] * math.cos(angle[1])))
         base = np.array(offset)
         for row in range(count[1]):
             for col in range(count[0]):

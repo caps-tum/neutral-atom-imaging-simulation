@@ -29,6 +29,7 @@ settings simulationSettings = {
     .exposureTime = 0.1,
     .survivalProbability = 1,
     .fillingRatio = 1,
+    .lightSourceStdev = 0,
     .binning = 1,
     .resolutionX = 512,
     .resolutionY = 512,
@@ -177,6 +178,11 @@ EXPORT void readConfig(const char *path)
             double valueC = atof(value);
             simulationSettings.fillingRatio = valueC;
         }
+        else if(!strcmp(name, "lightSourceStdev"))
+        {
+            double valueC = atof(value);
+            simulationSettings.lightSourceStdev = valueC;
+        }
         else if(!strcmp(name, "binning"))
         {
             int valueC = atoi(value);
@@ -323,6 +329,11 @@ void setSurvivalProbability(double val)
 void setFillingRatio(double val)
 {
     simulationSettings.fillingRatio = val;
+}
+
+void setLightSourceStdev(double val)
+{
+    simulationSettings.lightSourceStdev = val;
 }
 
 void setBinning(int val)

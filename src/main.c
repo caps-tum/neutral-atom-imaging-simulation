@@ -33,5 +33,14 @@ int main()
     // Create simulated image
     createImageEMCCD(binnedImage, atomLocations, 1, NULL, 19, 1);
 
+
+    printf("Image: \n");
+    for(int i=0;i<resolutionY;i++){
+        for(int j=0;j<resolutionX;j++){
+            printf("%f ", binnedImage[i * resolutionX + j]);
+        }
+        printf("\n");
+    }
+
     free(binnedImage);
 }

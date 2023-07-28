@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#define _USE_MATH_DEFINES
 #include <math.h>
 #include "settings.h"
 #include "distributionSampling.h"
@@ -8,12 +9,19 @@
 
 #define EulerMascheroni 0.5772156649015328606065120900824024310422
 
-void initImageAndSimulateOpticalEffects(double *image, int imageHeight, int imageWidth, const double atomLocations[][2], double *truth, const double zernikeCoefficients[15], int atomCount, int approximationSteps)
+void initImageAndSimulateOpticalEffects(double *image, int imageHeight, int imageWidth, const double atomLocations[][2], 
+    double *truth, const double zernikeCoefficients[15], int atomCount, int approximationSteps)
 {
     double fractionalSolidAngle = (1 - sqrt(1 - simulationSettings.numericalAperture * simulationSettings.numericalAperture)) / 2;
     double photonsPerAtom = fractionalSolidAngle * simulationSettings.scatteringRate * simulationSettings.exposureTime * simulationSettings.quantumEfficiency;
 
     memset(image, 0, imageWidth * imageHeight * sizeof(double) * 4);
+
+    double gaussianNormalizationFactor = 1;
+    if(simulationSettings.lightSourceStdev > 0)
+    {
+        gaussianNormalizationFactor = 1 / (2 * M_PI * simulationSettings.lightSourceStdev * simulationSettings.lightSourceStdev);
+    }
 
     unsigned short anyAtomWithinSight = 0;
     for (int a = 0; a < atomCount; a++)
@@ -25,23 +33,36 @@ void initImageAndSimulateOpticalEffects(double *image, int imageHeight, int imag
                 truth++;
             }
         }
-        int x = imageWidth * atomLocations[a][0];
-        int y = imageHeight * atomLocations[a][1];
+        double x = imageWidth * atomLocations[a][0];
+        double y = imageHeight * atomLocations[a][1];
         if(x >= 0 && y >= 0 && x < imageWidth && y < imageHeight)
         {
+            y += imageHeight / 2;
+            x += imageWidth / 2;
             anyAtomWithinSight = 1;
+            double brightness = 1;
             if(randomZeroToOne() > simulationSettings.survivalProbability)
             {
-                double darkenedValue = sampleTimeOfAtomLossImaging(simulationSettings.survivalProbability);
-                image[(y + imageHeight / 2) * imageWidth * 2 + x + imageWidth / 2] += darkenedValue;
+                brightness = sampleTimeOfAtomLossImaging(simulationSettings.survivalProbability);
                 if(truth)
                 {
-                    *truth = darkenedValue;
+                    *truth = brightness;
+                }
+            }
+            if(simulationSettings.lightSourceStdev > 0)
+            {
+                for(int yi = 0; yi < 2 * imageHeight; yi++)
+                {
+                    for(int xi = 0; xi < 2 * imageWidth; xi++)
+                    {
+                        image[yi * imageWidth * 2 + xi] += brightness * gaussianNormalizationFactor * 
+                            pow(M_E, -((xi - x) * (xi - x) + (yi - y) * (yi - y)) / (2 * simulationSettings.lightSourceStdev * simulationSettings.lightSourceStdev));
+                    }
                 }
             }
             else
             {
-                image[(y + imageHeight / 2) * imageWidth * 2 + x + imageWidth / 2] += 1;
+                image[(int)y * imageWidth * 2 + (int)x] += brightness;
             }
         }
         if(truth)
@@ -135,9 +156,9 @@ void createImageEMCCD(double *binnedImage, const double potentialAtomLocations[]
     double *image = malloc(imageHeight * imageWidth * sizeof(double) * 4); // Times 4 since the array has to be zero-padded to circumvent wraparound errors from the convolution
     initImageAndSimulateOpticalEffects(image, imageHeight, imageWidth, normalizedAtomLocations, truth, simulationSettings.zernikeCoefficients, atomCount, approximationSteps);
 
-    for (int i = 0; i < imageHeight * 2; i++)
+    for (int i = imageHeight / 2; i < imageHeight + imageHeight / 2; i++)
     {
-        for(int j = 0; j < imageWidth * 2; j++)
+        for(int j = imageWidth / 2; j < imageWidth + imageWidth / 2; j++)
         {
             // Sample light plus spurious charges, only one sampling due to reproductivity of poissonian distribution
             image[i * imageWidth * 2 + j] = samplePoisson(image[i * imageWidth * 2 + j] + ((simulationSettings.strayLightRate + simulationSettings.darkCurrentRate) * simulationSettings.exposureTime + simulationSettings.cicChance) / (approximationSteps * approximationSteps));

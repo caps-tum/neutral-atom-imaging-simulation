@@ -59,8 +59,8 @@ void simulateOptics(double *inputImage, int imageHeight, int imageWidth, double 
     {
         for(int j = 0; j < imageWidth; j++)
         {
-            double y = (i - imageHeight / 2) * yFac;
-            double x = (j - imageWidth / 2) * xFac;
+            double y = (i - (imageHeight - 1) / 2) * yFac;
+            double x = (j - (imageHeight - 1) / 2) * xFac;
             double r = sqrt(x * x + y * y);
             if(r < pupilRadius)
             {
@@ -96,7 +96,7 @@ void simulateOptics(double *inputImage, int imageHeight, int imageWidth, double 
     {
         for(int j = 0; j < imageWidth; j++)
         {
-            mtf[((i + imageHeight / 2) % imageHeight) * imageWidth + ((j + imageWidth / 2) % imageWidth)] = cabs(otf[i * imageWidth + j] / max_val);
+            mtf[i * imageWidth + j] = cabs(otf[i * imageWidth + j] / max_val);
         }
     }
 

@@ -27,6 +27,7 @@ typedef struct Settings
     double exposureTime;
     double survivalProbability;
     double fillingRatio;
+    double lightSourceStdev;
     int binning;
     int resolutionX;
     int resolutionY;
@@ -58,6 +59,7 @@ EXPORT void setScatteringRate(double val);
 EXPORT void setExposureTime(double val);
 EXPORT void setSurvivalProbability(double val);
 EXPORT void setFillingRatio(double val);
+EXPORT void setLightSourceStdev(double val);
 EXPORT void setBinning(int val);
 EXPORT void setResolution(int x, int y);
 EXPORT void setZernikeCoefficients(const double val[15]);
