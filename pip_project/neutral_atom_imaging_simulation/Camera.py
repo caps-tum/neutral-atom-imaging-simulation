@@ -98,35 +98,35 @@ class EMCCDCamera(Camera):
     def apply_settings(self):
         """Function for relaying any settings changes to the library
         @return None"""
-        if self.dark_current_rate:
+        if self.dark_current_rate is not None:
             self.library.setDarkCurrentRate(ctypes.c_double(self.dark_current_rate))
-        if self.cic_chance:
+        if self.cic_chance is not None:
             self.library.setCicChance(ctypes.c_double(self.cic_chance))
-        if self.quantum_efficiency:
+        if self.quantum_efficiency is not None:
             self.library.setQuantumEfficiency(ctypes.c_double(self.quantum_efficiency))
-        if self.numerical_aperture:
+        if self.numerical_aperture is not None:
             self.library.setNumericalAperture(ctypes.c_double(self.numerical_aperture))
-        if self.physical_pixel_size:
+        if self.physical_pixel_size is not None:
             self.library.setPhysicalPixelSize(ctypes.c_double(self.physical_pixel_size))
-        if self.magnification:
+        if self.magnification is not None:
             self.library.setMagnification(ctypes.c_double(self.magnification))
-        if self.bias_clamp:
+        if self.bias_clamp is not None:
             self.library.setBiasClamp(ctypes.c_double(self.bias_clamp))
-        if self.preampgain:
+        if self.preampgain is not None:
             self.library.setPreampgain(ctypes.c_double(self.preampgain))
-        if self.scic_chance:
+        if self.scic_chance is not None:
             self.library.setSCICChance(ctypes.c_double(self.scic_chance))
-        if self.readout_stdev:
+        if self.readout_stdev is not None:
             self.library.setReadoutStdev(ctypes.c_double(self.readout_stdev))
-        if self.number_gain_reg:
+        if self.number_gain_reg is not None:
             self.library.setNumberGainRegisters(ctypes.c_double(self.number_gain_reg))
-        if self.p0:
+        if self.p0 is not None:
             self.library.setP0(ctypes.c_double(self.p0))
-        if self.exposure_time:
+        if self.exposure_time is not None:
             self.library.setExposureTime(ctypes.c_double(self.exposure_time))
-        if self.binning:
+        if self.binning is not None:
             self.library.setBinning(ctypes.c_int(self.binning))
-        if (not self.zernike_coefficients is None) and len(self.zernike_coefficients) >= 15:
+        if (self.zernike_coefficients is not None) and len(self.zernike_coefficients) >= 15:
             self.library.setZernikeCoefficients(self.zernike_coefficients.ctypes.data_as(ctypes.POINTER(ctypes.c_double)))
         self.library.setResolution(ctypes.c_int(self.resolution[0]), ctypes.c_int(self.resolution[1]))
 
@@ -183,36 +183,36 @@ class CMOSCamera(Camera):
     def apply_settings(self):
         """Function for relaying any settings changes to the library
         @return None"""
-        if self.dark_current_sampling_alpha:
+        if self.dark_current_sampling_alpha is not None:
             self.library.setDarkCurrentSamplingAlpha(ctypes.c_double(self.dark_current_rate))
-        if self.dark_current_sampling_beta:
+        if self.dark_current_sampling_beta is not None:
             self.library.setDarkCurrentSamplingBeta(ctypes.c_double(self.dark_current_rate))
-        if self.quantum_efficiency:
+        if self.quantum_efficiency is not None:
             self.library.setQuantumEfficiency(ctypes.c_double(self.quantum_efficiency))
-        if self.numerical_aperture:
+        if self.numerical_aperture is not None:
             self.library.setNumericalAperture(ctypes.c_double(self.numerical_aperture))
-        if self.physical_pixel_size:
+        if self.physical_pixel_size is not None:
             self.library.setPhysicalPixelSize(ctypes.c_double(self.physical_pixel_size))
-        if self.magnification:
+        if self.magnification is not None:
             self.library.setMagnification(ctypes.c_double(self.magnification))
-        if self.bias_clamp:
+        if self.bias_clamp is not None:
             self.library.setBiasClamp(ctypes.c_double(self.bias_clamp))
-        if self.bias_stdev:
+        if self.bias_stdev is not None:
             self.library.setBiasStdev(ctypes.c_double(self.bias_stdev))
-        if self.row_noise_stdev:
+        if self.row_noise_stdev is not None:
             self.library.setRowNoiseStdev(ctypes.c_double(self.row_noise_stdev))
-        if self.column_noise_scale:
+        if self.column_noise_scale is not None:
             self.library.setColumnNoiseScale(ctypes.c_double(self.column_noise_scale))
-        if self.flicker_noise_scale:
+        if self.flicker_noise_scale is not None:
             self.library.setFlickerNoiseScale(ctypes.c_double(self.flicker_noise_scale))
-        if self.preampgain:
+        if self.preampgain is not None:
             self.library.setPreampgain(ctypes.c_double(self.preampgain))
-        if self.readout_stdev:
+        if self.readout_stdev is not None:
             self.library.setReadoutStdev(ctypes.c_double(self.readout_stdev))
-        if self.exposure_time:
+        if self.exposure_time is not None:
             self.library.setExposureTime(ctypes.c_double(self.exposure_time))
-        if self.binning:
+        if self.binning is not None:
             self.library.setBinning(ctypes.c_int(self.binning))
-        if (not self.zernike_coefficients is None) and len(self.zernike_coefficients) >= 15:
+        if (self.zernike_coefficients is not None) and len(self.zernike_coefficients) >= 15:
             self.library.setZernikeCoefficients(self.zernike_coefficients.ctypes.data_as(ctypes.POINTER(ctypes.c_double)))
         self.library.setResolution(ctypes.c_int(self.resolution[0]), ctypes.c_int(self.resolution[1]))

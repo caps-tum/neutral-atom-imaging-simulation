@@ -53,17 +53,17 @@ class TweezerArray(Experiment):
     def apply_settings(self):
         """Function for relaying any settings changes to the library
         @return None"""
-        if self.stray_light_rate:
+        if self.stray_light_rate is not None:
             self.library.setStrayLightRate(ctypes.c_double(self.stray_light_rate))
-        if self.imaging_wavelength:
+        if self.imaging_wavelength is not None:
             self.library.setWavelength(ctypes.c_double(self.imaging_wavelength))
-        if self.scattering_rate:
+        if self.scattering_rate is not None:
             self.library.setScatteringRate(ctypes.c_double(self.scattering_rate))
-        if self.survival_probability:
+        if self.survival_probability is not None:
             self.library.setSurvivalProbability(ctypes.c_double(self.survival_probability))
-        if self.fill_rate:
+        if self.fill_rate is not None:
             self.library.setFillingRatio(ctypes.c_double(self.fill_rate))
-        if self.light_source_stdev:
+        if self.light_source_stdev is not None:
             self.library.setLightSourceStdev(ctypes.c_double(self.light_source_stdev))
 
     def set_atom_sites_camera_space(self, atom_sites):

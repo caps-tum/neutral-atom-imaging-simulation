@@ -43,6 +43,11 @@ class ImageGenerator:
         self.__experiment = experiment
         self.__experiment.set_library(self.__create_image_library)
         self.__experiment.apply_settings()
+    
+    def get_psf(self, resolution: int):
+        psf = np.zeros((resolution * resolution,))
+        self.get_library().getConvolutedLightSource(psf.ctypes.data_as(ctypes.POINTER(ctypes.c_double)), resolution)
+        return psf.reshape((resolution,resolution))
 
     def create_image(self, approximation_steps = 1):
         """Function to be called for generating an image

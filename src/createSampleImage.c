@@ -18,9 +18,10 @@ void initImageAndSimulateOpticalEffects(double *image, int imageHeight, int imag
     memset(image, 0, imageWidth * imageHeight * sizeof(double) * 4);
 
     double gaussianNormalizationFactor = 1;
-    if(simulationSettings.lightSourceStdev > 0)
+    double effectiveLightSourceStdev = simulationSettings.lightSourceStdev * approximationSteps;
+    if(effectiveLightSourceStdev > 0)
     {
-        gaussianNormalizationFactor = 1 / (2 * M_PI * simulationSettings.lightSourceStdev * simulationSettings.lightSourceStdev);
+        gaussianNormalizationFactor = 1 / (2 * M_PI * effectiveLightSourceStdev * effectiveLightSourceStdev);
     }
 
     unsigned short anyAtomWithinSight = 0;
@@ -49,14 +50,14 @@ void initImageAndSimulateOpticalEffects(double *image, int imageHeight, int imag
                     *truth = brightness;
                 }
             }
-            if(simulationSettings.lightSourceStdev > 0)
+            if(effectiveLightSourceStdev > 0)
             {
                 for(int yi = 0; yi < 2 * imageHeight; yi++)
                 {
                     for(int xi = 0; xi < 2 * imageWidth; xi++)
                     {
                         image[yi * imageWidth * 2 + xi] += brightness * gaussianNormalizationFactor * 
-                            pow(M_E, -((xi - x) * (xi - x) + (yi - y) * (yi - y)) / (2 * simulationSettings.lightSourceStdev * simulationSettings.lightSourceStdev));
+                            pow(M_E, -((xi - x) * (xi - x) + (yi - y) * (yi - y)) / (2 * effectiveLightSourceStdev * effectiveLightSourceStdev));
                     }
                 }
             }
