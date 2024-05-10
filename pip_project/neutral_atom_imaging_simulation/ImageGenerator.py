@@ -55,7 +55,7 @@ class ImageGenerator:
         @return Numpy array of generated image
         @return Numpy array of ground truths per atom site"""
         resolution = (self.__camera.resolution[0] // self.__camera.binning, self.__camera.resolution[1] // self.__camera.binning)
-        image = np.zeros((resolution[0] * resolution[1],))
+        image = np.zeros((resolution[0] * resolution[1],), np.int32)
         atom_locations = self.__experiment.get_atom_sites()
         atom_count = len(atom_locations)
         c_atom_list = (ctypes.c_double * 2 * atom_count)()
@@ -63,7 +63,7 @@ class ImageGenerator:
         for j in range(atom_count):
             c_atom_list[j][0] = atom_locations[j][0]
             c_atom_list[j][1] = atom_locations[j][1]
-        self.__camera.get_image_creation_method()(image.ctypes.data_as(ctypes.POINTER(ctypes.c_double)), c_atom_list,\
+        self.__camera.get_image_creation_method()(image.ctypes.data_as(ctypes.POINTER(ctypes.c_int32)), c_atom_list,\
             ctypes.c_int(self.__experiment.uses_camera_coords()), truth.ctypes.data_as(ctypes.POINTER(ctypes.c_double)), atom_count, approximation_steps)
         return image.reshape((resolution[1],resolution[0])), truth
     

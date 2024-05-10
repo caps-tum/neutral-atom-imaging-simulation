@@ -141,7 +141,7 @@ void normalizeCameraCoords(double normalizedAtomLocations[][2], double atomLocat
     }
 }
 
-void createImageEMCCD(double *binnedImage, const double potentialAtomLocations[][2], unsigned short cameraCoords, double *truth, unsigned int potentialAtomCount, unsigned int approximationSteps)
+void createImageEMCCD(int *binnedImage, const double potentialAtomLocations[][2], unsigned short cameraCoords, double *truth, unsigned int potentialAtomCount, unsigned int approximationSteps)
 {
     double gamma = pow(1 + simulationSettings.p0, simulationSettings.numberGainRegisters);
 
@@ -208,7 +208,7 @@ void createImageEMCCD(double *binnedImage, const double potentialAtomLocations[]
     free(normalizedAtomLocations);
 }
 
-void createImageCMOS(double *binnedImage, const double potentialAtomLocations[][2], unsigned short cameraCoords, double *truth, unsigned int potentialAtomCount, unsigned int approximationSteps)
+void createImageCMOS(int *binnedImage, const double potentialAtomLocations[][2], unsigned short cameraCoords, double *truth, unsigned int potentialAtomCount, unsigned int approximationSteps)
 {
     int imageHeight = approximationSteps * simulationSettings.resolutionY;
     int imageWidth = approximationSteps * simulationSettings.resolutionX;
